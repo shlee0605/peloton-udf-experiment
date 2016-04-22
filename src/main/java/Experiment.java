@@ -23,7 +23,7 @@ public class Experiment {
 
     public void runExperimentTwo() {
         System.out.println();
-        String sql = "SELECT sum(x) FROM customer";
+        String sql = "SELECT * FROM customer";
         System.out.println("Experiment 2 : " + sql);
         connection.runQuery("EXPLAIN ANALYZE " + sql, DBType.TPCC);
     }
