@@ -7,7 +7,6 @@ import java.sql.*;
  */
 public class DBConnection {
 
-    public static final String DB_NAME = "ycsb";
     public static final String DB_PORT = "57721";
     public static final String USER_NAME = "vagrant";
     public static final String USER_PASSWORD = "password";
@@ -28,7 +27,7 @@ public class DBConnection {
         }
 
         try {
-            connection = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:" + DB_PORT + "/" + DB_NAME,
+            connection = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:" + DB_PORT,
                                                      USER_NAME, USER_PASSWORD);
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console");

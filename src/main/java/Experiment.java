@@ -11,14 +11,14 @@ public class Experiment {
 
     public void runExperimentOne() {
         System.out.println();
-        String sql = "SELECT * FROM \"USERTABLE\"";
+        String sql = "SELECT * FROM ycsb.\"USERTABLE\"";
         System.out.println("Experiment 1 : " + sql);
         connection.runQuery("EXPLAIN ANALYZE " + sql);
     }
 
     public void runExperimentTwo() {
         System.out.println();
-        String sql = "SELECT sum(x) FROM A";
+        String sql = "SELECT sum(x) FROM tpcc.customer";
         System.out.println("Experiment 2 : " + sql);
         connection.runQuery("EXPLAIN ANALYZE " + sql );
     }

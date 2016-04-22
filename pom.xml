@@ -21,7 +21,7 @@
     <build>
         <finalName>peloton-udf-experiment</finalName>
         <plugins>
-            
+
             <!-- Maven Assembly Plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
