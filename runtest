@@ -1,0 +1,1 @@
+java -cp target/peloton-udf-experiment-jar-with-dependencies.jar Main
