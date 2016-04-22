@@ -7,11 +7,14 @@ import java.sql.*;
  */
 public class DBConnection {
 
+    public static final String DB_NAME_YCSB = "ycsb";
+    public static final String DB_NAME_TPCC = "tpcc";
     public static final String DB_PORT = "57721";
     public static final String USER_NAME = "vagrant";
     public static final String USER_PASSWORD = "password";
 
-    Connection connection;
+    Connection connYCSB;
+    Connection connTPCC;
 
     public DBConnection() {
         connectToPeloton();
@@ -27,24 +30,37 @@ public class DBConnection {
         }
 
         try {
-            connection = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:" + DB_PORT,
-                                                     USER_NAME, USER_PASSWORD);
+            connYCSB = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:" + DB_PORT + "/" + DB_NAME_YCSB,
+                    USER_NAME, USER_PASSWORD);
+            connTPCC = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:" + DB_PORT + "/" + DB_NAME_TPCC,
+                    USER_NAME, USER_PASSWORD);
+
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console");
             e.printStackTrace();
             return;
         }
 
-        if (connection != null) {
+        if (connYCSB != null && connTPCC != null) {
             System.out.println("DB Connection is made successfully.");
         } else {
             System.out.println("Failed to make connection.");
         }
     }
 
-    public void runQuery(String sql) {
+    public void runQuery(String sql, Experiment.DBType type) {
+        Connection conn;
+        if (type == Experiment.DBType.YCSB) {
+            conn = connYCSB;
+        } else if (type == Experiment.DBType.TPCC) {
+            conn = connTPCC;
+        } else {
+            System.out.println("Wrong input type.");
+            return;
+        }
+
         try {
-            Statement stmt = connection.createStatement();
+            Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 System.out.println(rs.getString(1));
@@ -55,16 +71,14 @@ public class DBConnection {
             return;
         }
     }
-
-    public void closeConnection() {
+     public void closeConnection() {
         try {
-            connection.close();
+            connTPCC.close();
+            connYCSB.close();
         } catch(SQLException e) {
             System.out.println("Connection is not closed correctly.");
             e.printStackTrace();
             return;
         }
     }
-
-
 }

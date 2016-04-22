@@ -1,7 +1,12 @@
 /**
  * Experiments
  */
+
+
 public class Experiment {
+    public enum DBType {
+        YCSB, TPCC;
+    }
 
     DBConnection connection;
 
@@ -11,16 +16,16 @@ public class Experiment {
 
     public void runExperimentOne() {
         System.out.println();
-        String sql = "SELECT * FROM ycsb.\"USERTABLE\"";
+        String sql = "SELECT * FROM \"USERTABLE\"";
         System.out.println("Experiment 1 : " + sql);
-        connection.runQuery("EXPLAIN ANALYZE " + sql);
+        connection.runQuery("EXPLAIN ANALYZE " + sql, DBType.YCSB);
     }
 
     public void runExperimentTwo() {
         System.out.println();
-        String sql = "SELECT sum(x) FROM tpcc.customer";
+        String sql = "SELECT sum(x) FROM customer";
         System.out.println("Experiment 2 : " + sql);
-        connection.runQuery("EXPLAIN ANALYZE " + sql );
+        connection.runQuery("EXPLAIN ANALYZE " + sql, DBType.TPCC);
     }
 
 }
