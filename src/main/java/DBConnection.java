@@ -7,9 +7,9 @@ import java.sql.*;
  */
 public class DBConnection {
 
-    public static final String DB_NAME = "postgres";
-    public static final String DB_PORT = "5432";
-    public static final String USER_NAME = "shlee0605";
+    public static final String DB_NAME = "ycsb";
+    public static final String DB_PORT = "57721";
+    public static final String USER_NAME = "vagrant";
     public static final String USER_PASSWORD = "password";
 
     Connection connection;

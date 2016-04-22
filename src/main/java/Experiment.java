@@ -11,7 +11,7 @@ public class Experiment {
 
     public void runExperimentOne() {
         System.out.println();
-        String sql = "SELECT * FROM A";
+        String sql = "SELECT * FROM \"USERTABLE\"";
         System.out.println("Experiment 1 : " + sql);
         connection.runQuery("EXPLAIN ANALYZE " + sql);
     }
