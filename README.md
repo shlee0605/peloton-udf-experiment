@@ -42,11 +42,11 @@ DB Connection is made successfully.
 
 Experiment 1 : SELECT * FROM "USERTABLE"
 Seq Scan on "USERTABLE"  (cost=0.00..12.30 rows=230 width=324) (never executed)
-Planning time: 0.295 ms
-Execution time: 11.216 ms
+Planning time: 0.340 ms
+Execution time: 10.161 ms
 
 Experiment 2 : SELECT * FROM customer
 Seq Scan on customer  (cost=0.00..10.70 rows=70 width=1014) (never executed)
-Planning time: 0.272 ms
-Execution time: 1.607 ms
+Planning time: 0.404 ms
+Execution time: 683.502 ms
 ```
