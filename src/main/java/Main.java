@@ -13,8 +13,12 @@ public class Main {
         Experiment experiment = new Experiment(connection);
 
         // run experiments
-        experiment.runExperimentOne();
-        experiment.runExperimentTwo();
+        experiment.runExperiment(
+            Experiment.DBType.TPCC,
+            "calc_tax",
+            "explain analyze select i_price, calc_tax_plpgsql(i_price) from item;",
+            "explain analyze select i_price, calc_tax_c(i_price) from item;"
+        );
 
         connection.closeConnection();
     }
