@@ -34,7 +34,9 @@ public class Experiment {
     }
 
     public void runExperiment(DBType type, String funcName, String pSQL, String cSQL) {
-        System.out.println("\nExperiment on " + funcName + " function:");
+        System.out.println();
+        System.out.println("----------------------------------------------");
+        System.out.println("Experiment on " + funcName + " function:");
         System.out.println("----------------------------------------------");
         System.out.println("C UDF:");
         System.out.println(pSQL);

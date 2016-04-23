@@ -14,6 +14,12 @@ public class Main {
 
         // run experiments
         experiment.runExperiment(
+            Experiment.DBType.YCSB,
+            "concat_text",
+            "explain analyze select concat_text_plpgsql(field1, field2) from \"USERTABLE\";",
+            "explain analyze select concat_text_c(field1, field2) from \"USERTABLE\";"
+        );
+        experiment.runExperiment(
             Experiment.DBType.TPCC,
             "calc_tax",
             "explain analyze select i_price, calc_tax_plpgsql(i_price) from item;",
