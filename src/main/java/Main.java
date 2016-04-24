@@ -25,6 +25,13 @@ public class Main {
             "explain analyze select i_price, calc_tax_plpgsql(i_price) from item;",
             "explain analyze select i_price, calc_tax_c(i_price) from item;"
         );
+        experiment.runExperiment(
+                Experiment.DBType.TPCC,
+                "calc_tax",
+                "explain analyze select weighted_mean_plpgsql(ol_amount, ol_quantity) from order_line;",
+                "explain analyze select weighted_mean_c(ol_amount, ol_quantity) from order_line;"
+        );
+
 
         connection.closeConnection();
     }

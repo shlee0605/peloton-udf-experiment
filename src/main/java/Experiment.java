@@ -19,20 +19,6 @@ public class Experiment {
         connection = conn;
     }
 
-    public void runExperimentOne() {
-        System.out.println();
-        String sql = "SELECT * FROM \"USERTABLE\"";
-        System.out.println("Experiment 1 : " + sql);
-        connection.runQuery("EXPLAIN ANALYZE " + sql, DBType.YCSB);
-    }
-
-    public void runExperimentTwo() {
-        System.out.println();
-        String sql = "SELECT * FROM customer";
-        System.out.println("Experiment 2 : " + sql);
-        connection.runQuery("EXPLAIN ANALYZE " + sql, DBType.TPCC);
-    }
-
     public void runExperiment(DBType type, String funcName, String pSQL, String cSQL) {
         System.out.println();
         System.out.println("----------------------------------------------");
