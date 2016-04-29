@@ -70,7 +70,6 @@ public class DBConnection {
                 if(rowString.contains("Execution")) {
                     executionTime = Double.valueOf(rowString.replaceAll("[^.0-9]", ""));
                 }
-//                System.out.println(rs.getString(1));
             }
         } catch (SQLException e) {
             System.out.println("Error in executing SQL query: " + sql);
@@ -81,6 +80,26 @@ public class DBConnection {
         return executionTime;
     }
 
+    public void runUpdate(String sql, Experiment.DBType type) {
+        Connection conn;
+        if (type == Experiment.DBType.YCSB) {
+            conn = connYCSB;
+        } else if (type == Experiment.DBType.TPCC) {
+            conn = connTPCC;
+        } else {
+            System.out.println("Wrong input type.");
+            return;
+        }
+
+        try {
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(sql);
+        } catch (SQLException e) {
+            System.out.println("Error in executing SQL query: " + sql);
+            e.printStackTrace();
+            return;
+        }
+    }
 
     public void closeConnection() {
         try {

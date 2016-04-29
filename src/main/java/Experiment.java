@@ -1,13 +1,10 @@
 /**
  * Experiments
  */
+import java.util.Date;
 
 
 public class Experiment {
-
-    public static final String ANSI_RESET = "\u001B[0m";
-    public static final String ANSI_RED = "\u001B[31m";
-    public static final String ANSI_GREEN = "\u001B[32m";
 
     public enum DBType {
         YCSB, TPCC;
@@ -19,50 +16,57 @@ public class Experiment {
         connection = conn;
     }
 
-    public void runQuery(DBType type, String qry) {
-        connection.runQuery(qry, type);
+    public double runQuery(DBType type, String qry) {
+        return connection.runQuery(qry, type);
     }
 
-    public ExperimentResult runExperiment(DBType type, String funcName, String pSQL, String cSQL) {
-//        System.out.println("----------------------------------------------");
-//        System.out.println("Experiment on " + funcName + " function:");
-//        System.out.println("----------------------------------------------");
-//        System.out.println("PLPGSQL UDF:");
-//        System.out.println(pSQL);
-//        System.out.println("\nResult:");
-//        double psqlExecution = connection.runQuery(pSQL, type);
-//        System.out.println("----------------------------------------------");
-//        System.out.println("C UDF:");
-//        System.out.println(cSQL);
-//        System.out.println("\nResult:");
-//        double cExecution = connection.runQuery(cSQL, type);
-//        System.out.println("----------------------------------------------");
-//        System.out.println();
+    public void runUpdate(DBType type, String qry) {
+        connection.runUpdate(qry, type);
+    }
 
-        long startTime = System.currentTimeMillis();
+    public ExperimentResult runBasicExperiment(DBType type, String experimentName, String pSQL, String cSQL) {
         double psqlExecution = connection.runQuery(pSQL, type);
         double cExecution = connection.runQuery(cSQL, type);
-        long totalTime = System.currentTimeMillis() - startTime;
+        return new ExperimentResult(experimentName, psqlExecution, cExecution);
+    }
 
-        return new ExperimentResult(funcName, psqlExecution, cExecution, (double)totalTime);
+    public ExperimentResult runStoredProcedureExperimentOne(DBType type) {
+
+        long startTime = System.currentTimeMillis();
+        connection.runUpdate("DROP TABLE IF EXISTS A;", type);
+        connection.runUpdate("CREATE TABLE A(test INT);", type);
+        connection.runQuery("select insert_table_plpgsql(1000000);", type);
+        long storedProcedureTime = System.currentTimeMillis() - startTime;
+
+        startTime = System.currentTimeMillis();
+        connection.runUpdate("DROP TABLE IF EXISTS A;", type);
+        connection.runUpdate("CREATE TABLE A(test INT);", type);
+        for (int i = 0; i < 1000000; i++) {
+            connection.runUpdate("INSERT INTO A VALUES (1);", type);
+        }
+        long queryTime = System.currentTimeMillis() - startTime;
+
+        connection.runUpdate("DROP TABLE IF EXISTS A;", type);
+        return new ExperimentResult("insert test", storedProcedureTime, queryTime);
+    }
+
+    public ExperimentResult runStoredProcedureExperimentTwo() {
+        return null;
     }
 }
 
 class ExperimentResult {
-    String functionName;
-    double psqlExecutionTime;
-    double csqlExecutionTime;
-    double clientTotalExecutionTime;
+    String experimentName;
+    double resultOne;
+    double resultTwo;
 
-    public ExperimentResult(String name, double ptime, double ctime, double total) {
-        functionName = name;
-        psqlExecutionTime = ptime;
-        csqlExecutionTime = ctime;
-        clientTotalExecutionTime = total;
+    public ExperimentResult(String name, double one, double two) {
+        experimentName = name;
+        resultOne = one;
+        resultTwo = two;
     }
 
     public void printResult() {
-        System.out.println(functionName + "| " + psqlExecutionTime + "ms | " +
-                csqlExecutionTime + "ms | " + clientTotalExecutionTime + "ms");
+        System.out.println(experimentName + "\t| " + resultOne + "ms\t| " + resultTwo + "ms");
     }
 }
