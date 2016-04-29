@@ -43,7 +43,7 @@ public class Main {
             "explain analyze select integer_manipulate_plpgsql(i_im_id) from item;",
             "explain analyze select integer_manipulate_c(i_im_id) from item;"
         );
-        
+
         experiment(
             Experiment.DBType.TPCC,
             "item_sales_sum",

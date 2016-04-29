@@ -27,12 +27,12 @@ public class Experiment {
         System.out.println("----------------------------------------------");
         System.out.println("Experiment on " + funcName + " function:");
         System.out.println("----------------------------------------------");
-        System.out.println("C UDF:");
+        System.out.println("PLPGSQL UDF:");
         System.out.println(pSQL);
         System.out.println("\nResult:");
         connection.runQuery(pSQL, type);
         System.out.println("----------------------------------------------");
-        System.out.println("plpgsql UDF:");
+        System.out.println("C UDF:");
         System.out.println(cSQL);
         System.out.println("\nResult:");
         connection.runQuery(cSQL, type);
