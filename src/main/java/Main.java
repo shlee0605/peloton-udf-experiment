@@ -9,16 +9,16 @@ public class Main {
         // create experiment instance
         Experiment experiment = new Experiment(connection);
         // run experiment
-        ExperimentResult result = experiment.runExperiment(type, funcName, pSQL, cSQL);
+        ExperimentResult result = experiment.runBasicExperiment(type, funcName, pSQL, cSQL);
         result.printResult();
         connection.closeConnection();
     }
 
     public static void main(String[] args) {
-        System.out.println("------------- Peloton UDF Testing ------------");
+        System.out.println("------------- Peloton UDF Comparison Testing ------------");
 
-        System.out.println("function_name | c time | plpgsql time | total ");
-        
+        System.out.println("function name\t| c time \t | plpgsql time");
+
         experiment(
             Experiment.DBType.YCSB,
             "concat_text",
@@ -56,6 +56,10 @@ public class Main {
                     "in (100, 14232, 22352, 53421, 99322, 82312, 2214)"
         );
 
+
+        System.out.println();
+        System.out.println("------------- Stored Procedure Testing ------------")
+        System.out.println("experiment name\t| sql time \t | stored proc time");
 
     }
 }
