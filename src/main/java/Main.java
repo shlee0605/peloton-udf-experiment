@@ -41,6 +41,12 @@ public class Main {
             "explain analyze select integer_manipulate_plpgsql(i_im_id) from item;",
             "explain analyze select integer_manipulate_c(i_im_id) from item;"
         );
+        DBConnection connection = new DBConnection();
+        Experiment experiment = new Experiment(connection);
+        experiment.runExp(
+            Experiment.DBType.TPCC
+        );
+        connection.closeConnection();
 
     }
 }

@@ -71,6 +71,26 @@ public class DBConnection {
             return;
         }
     }
+    public void runUpdate(String sql, Experiment.DBType type) {
+        Connection conn;
+        if (type == Experiment.DBType.YCSB) {
+            conn = connYCSB;
+        } else if (type == Experiment.DBType.TPCC) {
+            conn = connTPCC;
+        } else {
+            System.out.println("Wrong input type.");
+            return;
+        }
+
+        try {
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(sql);
+        } catch (SQLException e) {
+            System.out.println("Error in executing SQL query: " + sql);
+            e.printStackTrace();
+            return;
+        }
+    }
      public void closeConnection() {
         try {
             connTPCC.close();

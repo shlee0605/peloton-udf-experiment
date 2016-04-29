@@ -1,6 +1,7 @@
 /**
  * Experiments
  */
+import java.util.Date;
 
 
 public class Experiment {
@@ -23,6 +24,10 @@ public class Experiment {
         connection.runQuery(qry, type);
     }
 
+    public void runUpdate(DBType type, String qry) {
+        connection.runUpdate(qry, type);
+    }
+
     public void runExperiment(DBType type, String funcName, String pSQL, String cSQL) {
         System.out.println("----------------------------------------------");
         System.out.println("Experiment on " + funcName + " function:");
@@ -38,6 +43,33 @@ public class Experiment {
         connection.runQuery(cSQL, type);
         System.out.println("----------------------------------------------");
         System.out.println();
+    }
+
+    public void runExp(DBType type) {
+        System.out.println("----------------------------------------------");
+        
+        long startTime = (new Date()).getTime();
+        connection.runUpdate("DROP TABLE IF EXISTS A;", type);
+        connection.runUpdate("CREATE TABLE A(test INT);", type);
+        connection.runQuery("select insert_table_plpgsql(1000000);", type);
+        long execTime = (new Date()).getTime() - startTime;
+        System.out.println(execTime + "ms");
+        connection.runQuery("select count(*) from A;", type);
+
+        System.out.println("----------------------------------------------");
+        startTime = (new Date()).getTime();
+        connection.runUpdate("DROP TABLE IF EXISTS A;", type);
+        connection.runUpdate("CREATE TABLE A(test INT);", type);
+        for (int i = 0; i < 1000000; i++) {
+            connection.runUpdate("INSERT INTO A VALUES (1);", type);
+        }
+        execTime = (new Date()).getTime() - startTime;
+        System.out.println(execTime + "ms");
+        connection.runQuery("select count(*) from A;", type);
+        
+        System.out.println("----------------------------------------------");
+        System.out.println();
+        connection.runUpdate("DROP TABLE IF EXISTS A;", type);
     }
 
 }
