@@ -13,7 +13,7 @@ public class Main {
         connection.closeConnection();
     }
 
-    private static void experimentStored(Experiment.DBType type) {
+    private static void experimentStoredProcedure(Experiment.DBType type) {
         // initialize db connection
         DBConnection connection = new DBConnection();
         // create experiment instance
@@ -63,9 +63,7 @@ public class Main {
                         "in (100, 14232, 22352, 53421, 99322, 82312, 2214)"
         );
 
-        DBConnection connection = new DBConnection();
-        Experiment experiment = new Experiment(connection);
-        connection.closeConnection();
-
+        experimentStoredProcedure(Experiment.DBType.TPCC);
+        
     }
 }
