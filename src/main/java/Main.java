@@ -9,7 +9,8 @@ public class Main {
         // create experiment instance
         Experiment experiment = new Experiment(connection);
         // run experiment
-        experiment.runExperiment(type, funcName, pSQL, cSQL);
+        ExperimentResult result = experiment.runExperiment(type, funcName, pSQL, cSQL);
+        result.printResult();
         connection.closeConnection();
     }
 
