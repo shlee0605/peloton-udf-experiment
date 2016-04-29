@@ -28,7 +28,7 @@ public class Experiment {
         connection.runUpdate(qry, type);
     }
 
-    public void runExperiment(DBType type, String funcName, String pSQL, String cSQL) {
+    public void runBasicExperiment(DBType type, String funcName, String pSQL, String cSQL) {
         System.out.println("----------------------------------------------");
         System.out.println("Experiment on " + funcName + " function:");
         System.out.println("----------------------------------------------");
@@ -45,13 +45,13 @@ public class Experiment {
         System.out.println();
     }
 
-    public void runExp(DBType type) {
+    public void runStoredProcedureExperiment(DBType type) {
         System.out.println("----------------------------------------------");
         
         long startTime = (new Date()).getTime();
         connection.runUpdate("DROP TABLE IF EXISTS A;", type);
         connection.runUpdate("CREATE TABLE A(test INT);", type);
-        connection.runQuery("select insert_table_plpgsql(1000000);", type);
+        connection.runQuery("select insert_table_plpgsql(100000);", type);
         long execTime = (new Date()).getTime() - startTime;
         System.out.println(execTime + "ms");
         connection.runQuery("select count(*) from A;", type);
@@ -60,7 +60,7 @@ public class Experiment {
         startTime = (new Date()).getTime();
         connection.runUpdate("DROP TABLE IF EXISTS A;", type);
         connection.runUpdate("CREATE TABLE A(test INT);", type);
-        for (int i = 0; i < 1000000; i++) {
+        for (int i = 0; i < 100000; i++) {
             connection.runUpdate("INSERT INTO A VALUES (1);", type);
         }
         execTime = (new Date()).getTime() - startTime;

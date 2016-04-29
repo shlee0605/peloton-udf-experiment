@@ -9,9 +9,22 @@ public class Main {
         // create experiment instance
         Experiment experiment = new Experiment(connection);
         // run experiment
-        experiment.runExperiment(type, funcName, pSQL, cSQL);
+        experiment.runBasicExperiment(type, funcName, pSQL, cSQL);
         connection.closeConnection();
     }
+
+    private static void experimentStored(Experiment.DBType type) {
+        // initialize db connection
+        DBConnection connection = new DBConnection();
+        // create experiment instance
+        Experiment experiment = new Experiment(connection);
+        // run experiment
+        experiment.runStoredProcedureExperiment(
+                Experiment.DBType.TPCC
+        );
+        connection.closeConnection();
+    }
+
 
     public static void main(String[] args) {
         System.out.println("------------- Peloton UDF Testing ------------");
@@ -41,11 +54,17 @@ public class Main {
             "explain analyze select integer_manipulate_plpgsql(i_im_id) from item;",
             "explain analyze select integer_manipulate_c(i_im_id) from item;"
         );
+        experiment(
+                Experiment.DBType.TPCC,
+                "item_sales_sum",
+                "explain analyze select i_id, item_sales_sum_plpgsql(i_id) from item where i_id " +
+                        "in (100, 14232, 22352, 53421, 99322, 82312, 2214)",
+                "explain analyze select i_id, item_sales_sum_c(i_id) from item where i_id " +
+                        "in (100, 14232, 22352, 53421, 99322, 82312, 2214)"
+        );
+
         DBConnection connection = new DBConnection();
         Experiment experiment = new Experiment(connection);
-        experiment.runExp(
-            Experiment.DBType.TPCC
-        );
         connection.closeConnection();
 
     }
