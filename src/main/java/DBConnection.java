@@ -70,7 +70,7 @@ public class DBConnection {
                 if(rowString.contains("Execution")) {
                     executionTime = Double.valueOf(rowString.replaceAll("[^.0-9]", ""));
                 }
-                System.out.println(rs.getString(1));
+//                System.out.println(rs.getString(1));
             }
         } catch (SQLException e) {
             System.out.println("Error in executing SQL query: " + sql);

@@ -46,8 +46,6 @@ public class Experiment {
 
         return new ExperimentResult(funcName, psqlExecution, cExecution, (double)totalTime);
     }
-
-
 }
 
 class ExperimentResult {
@@ -64,7 +62,7 @@ class ExperimentResult {
     }
 
     public void printResult() {
-        System.out.println("TEST:::" + functionName + ": " + psqlExecutionTime + " ms (plpgsql)" + " : " +
-                csqlExecutionTime + " ms (c) " + clientTotalExecutionTime + " ms (total)");
+        System.out.println(functionName + "| " + psqlExecutionTime + "ms | " +
+                csqlExecutionTime + "ms | " + clientTotalExecutionTime + "ms");
     }
 }

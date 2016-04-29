@@ -17,6 +17,8 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("------------- Peloton UDF Testing ------------");
 
+        System.out.println("function_name | c time | plpgsql time | total ");
+        
         experiment(
             Experiment.DBType.YCSB,
             "concat_text",
