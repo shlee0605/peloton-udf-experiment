@@ -40,12 +40,6 @@ public class DBConnection {
             e.printStackTrace();
             return;
         }
-
-        if (connYCSB != null && connTPCC != null) {
-            System.out.println("DB Connection is made successfully.");
-        } else {
-            System.out.println("Failed to make connection.");
-        }
     }
 
     // runQuery returns execution time of that query.

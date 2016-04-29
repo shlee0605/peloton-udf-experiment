@@ -73,6 +73,6 @@ public class Main {
         experimentStoredProcedureOne(
             Experiment.DBType.TPCC
         );
-        
+
     }
 }
