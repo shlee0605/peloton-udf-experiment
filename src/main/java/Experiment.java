@@ -35,19 +35,19 @@ public class Experiment {
         long startTime = System.currentTimeMillis();
         connection.runUpdate("DROP TABLE IF EXISTS A;", type);
         connection.runUpdate("CREATE TABLE A(test INT);", type);
-        connection.runQuery("select insert_table_plpgsql(1000000);", type);
+        connection.runQuery("select insert_table_plpgsql(1000);", type);
         long storedProcedureTime = System.currentTimeMillis() - startTime;
 
         startTime = System.currentTimeMillis();
         connection.runUpdate("DROP TABLE IF EXISTS A;", type);
         connection.runUpdate("CREATE TABLE A(test INT);", type);
-        for (int i = 0; i < 1000000; i++) {
+        for (int i = 0; i < 1000; i++) {
             connection.runUpdate("INSERT INTO A VALUES (1);", type);
         }
         long queryTime = System.currentTimeMillis() - startTime;
 
         connection.runUpdate("DROP TABLE IF EXISTS A;", type);
-        return new ExperimentResult("insert test", storedProcedureTime, queryTime);
+        return new ExperimentResult("insert test", queryTime, storedProcedureTime);
     }
 
     public ExperimentResult runStoredProcedureExperimentTwo() {
