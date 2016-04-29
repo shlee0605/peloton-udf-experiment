@@ -62,9 +62,9 @@ public class DBConnection {
         try {
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
-            while (rs.next()) {
-                System.out.println(rs.getString(1));
-            }
+//            while (rs.next()) {
+//                System.out.println(rs.getString(1));
+//            }
         } catch (SQLException e) {
             System.out.println("Error in executing SQL query: " + sql);
             e.printStackTrace();

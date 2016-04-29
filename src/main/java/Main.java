@@ -64,6 +64,6 @@ public class Main {
         );
 
         experimentStoredProcedure(Experiment.DBType.TPCC);
-        
+
     }
 }
