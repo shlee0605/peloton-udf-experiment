@@ -19,8 +19,11 @@ public class Experiment {
         connection = conn;
     }
 
+    public void runQuery(DBType type, String qry) {
+        connection.runQuery(qry, type);
+    }
+
     public void runExperiment(DBType type, String funcName, String pSQL, String cSQL) {
-        System.out.println();
         System.out.println("----------------------------------------------");
         System.out.println("Experiment on " + funcName + " function:");
         System.out.println("----------------------------------------------");
@@ -34,6 +37,7 @@ public class Experiment {
         System.out.println("\nResult:");
         connection.runQuery(cSQL, type);
         System.out.println("----------------------------------------------");
+        System.out.println();
     }
 
 }
