@@ -41,12 +41,23 @@ public class Main {
             "explain analyze select integer_manipulate_plpgsql(i_im_id) from item;",
             "explain analyze select integer_manipulate_c(i_im_id) from item;"
         );
-        DBConnection connection = new DBConnection();
-        Experiment experiment = new Experiment(connection);
-        experiment.runExp(
-            Experiment.DBType.TPCC
+
+        experiment(
+                Experiment.DBType.TPCC,
+                "item_sales_sum",
+                "explain analyze select i_id, item_sales_sum_plpgsql(i_id) from item where i_id " +
+                        "in (100, 14232, 22352, 53421, 99322, 82312, 2214)",
+                "explain analyze select i_id, item_sales_sum_c(i_id) from item where i_id " +
+                        "in (100, 14232, 22352, 53421, 99322, 82312, 2214)"
         );
-        connection.closeConnection();
+
+//
+//        DBConnection connection = new DBConnection();
+//        Experiment experiment = new Experiment(connection);
+//        experiment.runExp(
+//            Experiment.DBType.TPCC
+//        );
+//        connection.closeConnection();
 
     }
 }
