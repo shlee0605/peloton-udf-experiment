@@ -48,29 +48,38 @@ public class DBConnection {
         }
     }
 
-    public void runQuery(String sql, Experiment.DBType type) {
+    // runQuery returns execution time of that query.
+    public double runQuery(String sql, Experiment.DBType type) {
         Connection conn;
+        double executionTime = 0;
+
         if (type == Experiment.DBType.YCSB) {
             conn = connYCSB;
         } else if (type == Experiment.DBType.TPCC) {
             conn = connTPCC;
         } else {
             System.out.println("Wrong input type.");
-            return;
+            return 0;
         }
 
         try {
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
-                System.out.println(rs.getString(1));
+                String rowString = rs.getString(1);
+                if(rowString.contains("Execution")) {
+                    executionTime = Double.valueOf(rowString.replaceAll("[^.0-9]", ""));
+                }
             }
         } catch (SQLException e) {
             System.out.println("Error in executing SQL query: " + sql);
             e.printStackTrace();
-            return;
+            return 0;
         }
+
+        return executionTime;
     }
+
     public void runUpdate(String sql, Experiment.DBType type) {
         Connection conn;
         if (type == Experiment.DBType.YCSB) {
@@ -91,7 +100,8 @@ public class DBConnection {
             return;
         }
     }
-     public void closeConnection() {
+
+    public void closeConnection() {
         try {
             connTPCC.close();
             connYCSB.close();
