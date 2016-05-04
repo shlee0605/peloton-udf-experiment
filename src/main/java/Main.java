@@ -3,15 +3,14 @@
  */
 public class Main {
 
+    static DBConnection connection;
+    static Experiment experiment;
     private static void experiment(String funcName, String pSQL, String cSQL) {
         // initialize db connection
-        DBConnection connection = new DBConnection();
         // create experiment instance
-        Experiment experiment = new Experiment(connection);
         // run experiment
         ExperimentResult result = experiment.runBasicExperiment(funcName, pSQL, cSQL);
         result.printResult();
-        connection.closeConnection();
     }
 
     private static void experimentStoredProcedureOne() {
@@ -24,6 +23,8 @@ public class Main {
     }
 
     public static void main(String[] args) throws Exception {
+        connection = new DBConnection();
+        experiment = new Experiment(connection);
         System.out.println("------------- Peloton UDF Comparison Testing ------------");
         System.out.println("function name\t| c time \t | plpgsql time");
         experiment(
@@ -65,6 +66,7 @@ public class Main {
         System.out.println("experiment name\t| sql time \t | stored proc time");
 
         experimentStoredProcedureOne();
+        connection.closeConnection();
 
     }
 }
