@@ -24,15 +24,15 @@ Peloton UDF Experiment
   -o outputfile
   ```
 3. load sql functions & create one table
-```
-psql postgres
-
-\i peloton/scripts/testing/udf/load_plpgsql_udf.sql
-
-\i peloton/scripts/testing/udf/load_c_udf.sql
-
-create table a(test int);
-```
+  ```
+  psql postgres
+  
+  \i peloton/scripts/testing/udf/load_plpgsql_udf.sql
+  
+  \i peloton/scripts/testing/udf/load_c_udf.sql
+  
+  create table a(test int);
+  ```
 4. compile and run the program
   ```
   git clone https://github.com/shlee0605/peloton-udf-experiment.git
