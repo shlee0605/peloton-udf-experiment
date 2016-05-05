@@ -62,8 +62,10 @@ public class Main {
 
         experiment(
                 "countdown",
-                "explain analyze select countdown_plpgsql(i_im_id) from item;",
-                "explain analyze select countdown_c(i_im_id) from item;"
+                "explain analyze select countdown_plpgsql(i_id) from item where i_id " +
+                        "in (100, 14232, 22352, 53421, 99322, 82312, 2214);",
+                "explain analyze select countdown_c(i_id) from item where i_id " +
+                        "in (100, 14232, 22352, 53421, 99322, 82312, 2214);"
         );
 
         experiment(
