@@ -26,7 +26,7 @@ public class Main {
         connection = new DBConnection();
         experiment = new Experiment(connection);
         System.out.println("------------- Peloton UDF Comparison Testing ------------");
-        System.out.println("function name\t| c time \t | plpgsql time");
+        System.out.println("function name\t| plpgsql time \t | c time");
         experiment(
             "concat_text",
             "explain analyze select concat_text_plpgsql(field1, field2) from \"USERTABLE\";",

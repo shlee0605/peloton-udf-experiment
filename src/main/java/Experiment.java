@@ -28,16 +28,19 @@ public class Experiment {
 
     public ExperimentResult runStoredProcedureExperimentOne() {
 
-        connection.runUpdate("delete from A where test=1;");
+        connection.runUpdate("delete from A where test>=0;");
         long startTime = System.currentTimeMillis();
-        connection.runQuery("select insert_table_plpgsql(1000);");
+        connection.runQuery("select insert_table_plpgsql(10000);");
         long storedProcedureTime = System.currentTimeMillis() - startTime;
 
-        connection.runUpdate("delete from A where test=1;");
+        connection.runUpdate("delete from A where test>=0;");
         startTime = System.currentTimeMillis();
+        connection.runPrepareStmtOne("INSERT INTO A VALUES(?);", 10000);
+        /*
         for (int i = 0; i < 1000; i++) {
             connection.runUpdate("INSERT INTO A VALUES (1);");
         }
+        */
         long queryTime = System.currentTimeMillis() - startTime;
 
         return new ExperimentResult("insert test", queryTime, storedProcedureTime);
