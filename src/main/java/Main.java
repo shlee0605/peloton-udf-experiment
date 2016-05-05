@@ -70,8 +70,10 @@ public class Main {
 
         experiment(
                 "fib",
-                "explain analyze select fib_plpgsql(i_im_id) from item;",
-                "explain analyze select fib_c(i_im_id) from item;"
+                "explain analyze select fib_plpgsql(i_id) from item where i_id " +
+                        "in (100, 14232, 22352, 53421, 99322, 82312, 2214);",
+                "explain analyze select fib_c(i_id) from item where i_id " +
+                        "in (100, 14232, 22352, 53421, 99322, 82312, 2214);"
         );
 
         // Stored Procedure Test
