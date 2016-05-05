@@ -60,6 +60,18 @@ public class Main {
                         "in (100, 14232, 22352, 53421, 99322, 82312, 2214)"
         );
 
+        experiment(
+                "countdown",
+                "explain analyze select countdown_plpgsql(i_im_id) from item;",
+                "explain analyze select countdown_c(i_im_id) from item;"
+        );
+
+        experiment(
+                "fib",
+                "explain analyze select fib_plpgsql(i_im_id) from item;",
+                "explain analyze select fib_c(i_im_id) from item;"
+        );
+
         // Stored Procedure Test
         System.out.println();
         System.out.println("------------- Stored Procedure Testing ------------");
