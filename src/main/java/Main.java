@@ -70,8 +70,8 @@ public class Main {
 
         experiment(
                 "fib",
-                "explain analyze select fib_plpgsql(i_id) from item where i_id <= 30;",
-                "explain analyze select fib_c(i_id) from item where i_id <= 30;"
+                "explain analyze select fib_plpgsql(i_id % 20) from item;",
+                "explain analyze select fib_c(i_id % 20) from item;"
         );
 
         // Stored Procedure Test
