@@ -87,6 +87,21 @@ public class DBConnection {
         }
     }
 
+    public void runPrepareStmtTwo(String sql, int cnt) {
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            for (int i = 0; i < cnt; i++) {
+                ps.setInt(1, i);
+                ps.addBatch();
+            }
+            ps.executeBatch();
+            ps.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return;
+        }
+    }
+
     public void closeConnection() {
         try {
             conn.close();

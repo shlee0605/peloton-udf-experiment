@@ -14,12 +14,18 @@ public class Main {
     }
 
     private static void experimentStoredProcedureOne() {
-        DBConnection connection = new DBConnection();
-        Experiment experiment = new Experiment(connection);
+        //DBConnection connection = new DBConnection();
+        //Experiment experiment = new Experiment(connection);
 
         ExperimentResult result = experiment.runStoredProcedureExperimentOne();
         result.printResult();
-        connection.closeConnection();
+        //connection.closeConnection();
+    }
+
+    private static void experimentStoredProcedureTwo() {
+
+        ExperimentResult result = experiment.runStoredProcedureExperimentTwo();
+        result.printResult();
     }
 
     public static void main(String[] args) throws Exception {
@@ -80,6 +86,7 @@ public class Main {
         System.out.println("experiment name\t| sql time \t | stored proc time");
 
         experimentStoredProcedureOne();
+        experimentStoredProcedureTwo();
         connection.closeConnection();
 
     }

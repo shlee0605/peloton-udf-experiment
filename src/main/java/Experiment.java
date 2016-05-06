@@ -27,7 +27,6 @@ public class Experiment {
     }
 
     public ExperimentResult runStoredProcedureExperimentOne() {
-
         connection.runUpdate("delete from A where test>=0;");
         long startTime = System.currentTimeMillis();
         connection.runQuery("select insert_table_plpgsql(10000);");
@@ -36,19 +35,27 @@ public class Experiment {
         connection.runUpdate("delete from A where test>=0;");
         startTime = System.currentTimeMillis();
         connection.runPrepareStmtOne("INSERT INTO A VALUES(?);", 10000);
-        /*
-        for (int i = 0; i < 1000; i++) {
-            connection.runUpdate("INSERT INTO A VALUES (1);");
-        }
-        */
         long queryTime = System.currentTimeMillis() - startTime;
 
         return new ExperimentResult("insert test", queryTime, storedProcedureTime);
     }
 
     public ExperimentResult runStoredProcedureExperimentTwo() {
-        return null;
+        connection.runUpdate("delete from A where test>=0;");
+        connection.runPrepareStmtOne("INSERT INTO A VALUES(?);", 1000);
+        long startTime = System.currentTimeMillis();
+        connection.runQuery("select modify_table_plpgsql();");
+        long storedProcedureTime = System.currentTimeMillis() - startTime;
+
+        connection.runUpdate("delete from A where test>=0;");
+        connection.runPrepareStmtOne("INSERT INTO A VALUES(?);", 1000);
+        startTime = System.currentTimeMillis();
+        connection.runPrepareStmtTwo("UPDATE A SET test=99999 where test=?;", 500);
+        long queryTime = System.currentTimeMillis() - startTime;
+
+        return new ExperimentResult("update test", queryTime, storedProcedureTime);
     }
+
 }
 
 class ExperimentResult {
